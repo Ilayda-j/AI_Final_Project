@@ -144,3 +144,94 @@ X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=
 # Train the model
 classifier = RandomForestClassifier(n_estimators=200, max_depth=10, random_state=42)
 classifier.fit(X_train, y_train)
+
+### **Solution Formulation: LSTM-Based Fake News Detection**
+
+#### 3. **AI Techniques Implemented**
+
+This method employs a **Long Short-Term Memory (LSTM)** neural network to classify text as either **fake** or **real**. LSTM is a type of recurrent neural network (RNN) that excels at capturing temporal dependencies and context in sequential data, such as text. The model was implemented with a bidirectional LSTM to process the text both forwards and backwards, ensuring a thorough understanding of word relationships.
+
+---
+
+#### **Steps to Solve the Problem**
+
+1. **Preprocessing**:
+   - **Text Tokenization**: Sentences are tokenized into individual words and converted to lowercase. This simplifies the input while retaining semantic meaning.
+   - **Integer Encoding**: Words are mapped to unique integers using a tokenizer.
+   - **Padding**: All sentences are padded to the same length to create uniform input for the LSTM.
+
+   **Code:**
+   ```python
+   tokenizer = Tokenizer(oov_token="<OOV>")
+   tokenizer.fit_on_texts(df["text"])
+   vocab_size = len(tokenizer.word_index) + 1
+   sequences = tokenizer.texts_to_sequences(df["text"])
+   max_length = max(len(seq) for seq in sequences)
+   padded_sequences = pad_sequences(sequences, maxlen=max_length, padding="post")
+   ```
+
+2. **Building the Model**:
+
+* Embedding Layer: Converts words into dense vector representations of size 128. These embeddings capture semantic relationships between words.
+* Bidirectional LSTM: Processes text both forwards and backwards, improving the understanding of contextual dependencies.
+* Dropout Regularization: Prevents overfitting by randomly deactivating neurons during training.
+* Dense Layers: Fully connected layers refine the learned features for classification.
+* Output Layer: Uses a sigmoid activation to classify text as fake (1) or real (0).
+
+**Code:**
+```python
+model = Sequential([
+    Embedding(input_dim=vocab_size, output_dim=128, input_length=max_length),
+    Bidirectional(LSTM(128, return_sequences=True)),
+    Dropout(0.5),
+    LSTM(64),
+    Dropout(0.5),
+    Dense(32, activation='relu'),
+    Dropout(0.5),
+    Dense(1, activation='sigmoid')
+])
+```
+
+3. **Training the Model:**
+
+The model is trained using binary cross-entropy loss and the Adam optimizer for 20 epochs.
+Validation split (20%) is used to monitor performance during training.
+
+**Code:**
+
+```python
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+history = model.fit(X_train, y_train, validation_split=0.2, epochs=20, batch_size=16, verbose=2)
+```
+
+4. **Evaluation:**
+
+The model is tested on unseen data using metrics such as accuracy, precision, recall, and F1 score.
+Real-time predictions are performed by preprocessing input text, tokenizing, and padding it before passing it to the model.
+
+**Code for Real-Time Prediction:**
+
+```python
+def predict_fake_news_lstm(text):
+    preprocessed_text = preprocess_text(text)
+    sequence = tokenizer.texts_to_sequences([preprocessed_text])
+    padded_sequence = pad_sequences(sequence, maxlen=max_length, padding="post")
+    prediction = model.predict(padded_sequence)[0][0]
+    label = "Fake" if prediction > 0.5 else "Real"
+    return label, prediction
+```
+
+#### Why LSTM is the Right Technique?
+
+* Temporal Awareness:
+
+Unlike traditional machine learning models, LSTM understands temporal dependencies, allowing it to recognize patterns in word sequences that are crucial for differentiating fake news.
+* Context Sensitivity:
+
+Fake news often contains sensationalized keywords alongside credible-sounding phrases. LSTM effectively integrates these contextual cues to make informed predictions.
+* Improved Accuracy:
+
+The bidirectional LSTM ensures that both the preceding and succeeding contexts of a word are considered, leading to more accurate classifications.
+* Adaptability:
+
+The model can be easily extended with pre-trained embeddings (e.g., GloVe or Word2Vec) or additional layers for further performance improvements.
