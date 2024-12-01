@@ -146,9 +146,7 @@ classifier = RandomForestClassifier(n_estimators=200, max_depth=10, random_state
 classifier.fit(X_train, y_train)
 ```
 
-### **Solution Formulation: LSTM-Based Fake News Detection**
-
-#### 3. **AI Techniques Implemented**
+### 3. **AI Techniques Implemented**
 
 This method employs a **Long Short-Term Memory (LSTM)** neural network to classify text as either **fake** or **real**. LSTM is a type of recurrent neural network (RNN) that excels at capturing temporal dependencies and context in sequential data, such as text. The model was implemented with a bidirectional LSTM to process the text both forwards and backwards, ensuring a thorough understanding of word relationships.
 
