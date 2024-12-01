@@ -1,8 +1,8 @@
 # AI Final Project: Automated Fake News Detector for Social Media
 
-## Introduction
+## **Introduction**
 
-### Motivation 
+### **Motivation**
 
 The rise of misinformation on social media presents an intriguing and challenging problem for algorithm design. Fake news not only spreads faster than truthful content but also exploits linguistic and contextual nuances, making it a compelling subject for advanced AI applications. This project is motivated by the opportunity to explore and implement state-of-the-art algorithms to address a real-world problem within a controlled academic framework.
 
@@ -15,107 +15,83 @@ This project also provides a valuable learning opportunity to:
 - Analyze and compare performance metrics to determine the most effective approach.
 By addressing the technical and analytical aspects of this problem, this project allows us to deepen our understanding of AI methodologies while contributing a meaningful solution to an increasingly relevant societal issue.
 
-### Contributions
+### **Contributions**
 
 For this project, I introduced multiple AI approaches to achieve accurate and transparent misinformation detection. The key contributions include:
 
 1. Natural Language Processing (NLP):
-- Extracts linguistic features from posts using tokenization, sentiment analysis, and Named Entity Recognition (NER).
+-- Extracts linguistic features from posts using tokenization, sentiment analysis, and Named Entity Recognition (NER).
 2. Decision Tree Models:
-- Implements Random Forest classifiers to identify patterns and classify text based on extracted features.
+-- Implements Random Forest classifiers to identify patterns and classify text based on extracted features.
 3. Neural Networks (RNN/LSTM):
-- Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
+-- Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
 4. Transformer-based Models (e.g., BERT/RoBERTa):
-- Provides sophisticated context and semantic understanding for detecting subtle misinformation.
+-- Provides sophisticated context and semantic understanding for detecting subtle misinformation.
 
 
-## Algorithms
+## **Solution Formulation**
 
-### Algorithm 1: NLP High-Level Explanation of the Algorithm
+### **AI Techniques Implemented**
 
-This algorithm decides whether a sentence is **fake** or **real** by analyzing specific linguistic and structural features in the text, processing those features into numerical values, and using a machine learning classifier to make predictions based on the processed data.
-
----
-
-#### Key Steps in the Algorithm
-
-##### 1. Feature Extraction
-The algorithm breaks down each sentence into quantifiable attributes, or "features," which provide insights into the text's characteristics. These features include:
-- **Tokenization**: Counts the number of words in the sentence.
-- **Sentiment Analysis**: Measures the emotional tone (positive, negative, neutral, or compound sentiment).
-- **Named Entity Recognition (NER)**:
-  - Detects proper nouns (e.g., organizations, locations, people).
-  - Counts how many of these entities appear and categorizes them into types (e.g., "PERSON," "GPE" for geopolitical entities).
-- **Readability Metrics**:
-  - Average word length.
-  - Sentence length.
-- **Exaggeration Detection**:
-  - Looks for keywords often used in sensational fake news (e.g., "breaking," "shocking," "unbelievable").
-- **Real News Keywords**:
-  - Counts words associated with credible or factual news, like "study," "initiative," "policy," or "discovery."
+This project uses a combination of AI techniques to tackle the problem of detecting fake news on social media. Each method contributes to different aspects of the solution, helping the system analyze text content, extract meaningful features, and make accurate predictions. Below, we describe the techniques we implemented, their roles in solving the problem, and why they were chosen.
 
 ---
 
-##### 2. Training the Machine Learning Model
-- The extracted features are stored in a **feature matrix**, and each sentence is labeled as **1 (Fake)** or **0 (Real)**.
-- The dataset is split into **training** and **test sets**.
-- A **Random Forest Classifier** is trained on the features of the training set to learn patterns that distinguish fake news from real news.
-  - Random Forest is an ensemble model that builds multiple decision trees and combines their outputs for robust predictions.
-  - It uses hyperparameters like `n_estimators=200` (number of trees) and `max_depth=10` (limits tree depth to avoid overfitting).
+### **1. Natural Language Processing (NLP)**
+
+#### **Steps:**
+1. **Tokenization**:
+   - The text is split into individual words or tokens to analyze linguistic features like word counts and keyword frequencies.
+   - Example:
+     ```
+     Input: "Breaking news: Aliens have landed on Earth!"
+     Tokens: ["Breaking", "news", ":", "Aliens", "have", "landed", "on", "Earth", "!"]
+     ```
+   - **Role**: Helps identify structural patterns, such as text complexity, and locate keywords.
+
+2. **Sentiment Analysis**:
+   - We calculate the emotional tone of the text using scores for positive, negative, and neutral sentiment, as well as an overall "compound" score.
+   - Fake news often exaggerates emotions, so strong sentiment is flagged as a potential indicator.
+   - Example:
+     ```
+     Input: "Shocking discovery changes everything!"
+     Sentiment Scores: {'neg': 0.2, 'neu': 0.4, 'pos': 0.4, 'compound': 0.7}
+     ```
+   - **Role**: Identifies exaggerated or emotionally charged language often seen in fake news.
+
+3. **Named Entity Recognition (NER)**:
+   - Proper nouns (e.g., organizations, locations, people) are extracted to assess credibility.
+   - Example:
+     ```
+     Input: "NASA discovers water on Mars."
+     Output: [('NASA', 'ORGANIZATION'), ('Mars', 'GPE')]
+     ```
+   - **Role**: Fake news often lacks references to credible entities or uses irrelevant ones, which NER helps identify.
+
+#### **Why NLP?**
+NLP provides the foundational features for the system, allowing higher-level algorithms to focus on relevant linguistic patterns, improving classification accuracy and robustness.
 
 ---
 
-##### 3. Prediction
-When a new sentence is input:
-1. The sentence is processed using the same feature extraction steps as the training data.
-2. The feature values are passed to the trained Random Forest model.
-3. The model predicts:
-   - **Binary Output**: `1 (Fake)` or `0 (Real)`.
-   - **Probability**: Confidence level for the prediction, e.g., 80% likelihood of being fake.
+### **2. Decision Tree Models (Random Forest)**
 
----
+#### **Steps:**
+1. Extract the features generated by the NLP pipeline.
+2. Train a **Random Forest Classifier**, which creates multiple decision trees using subsets of features and data:
+   - Each tree makes a prediction, and the majority vote determines the final classification.
+   - Example:
+     ```
+     Rule: IF sentiment_compound > 0.7 AND num_named_entities = 0 THEN classify as Fake.
+     ```
+3. Evaluate the model's performance on the test dataset using accuracy, precision, recall, and F1 score.
 
-#### How the Algorithm Differentiates Between Fake and Real News
-##### Fake News:
-- Higher **exaggeration keyword counts**.
-- Fewer or irrelevant named entities (e.g., lack of organizations or locations).
-- Strong emotional sentiment (positive or negative extremes).
-- Simplistic language (shorter average word lengths or sentences).
+#### **Pseudo Code:**
+```python
+# Train a Random Forest Classifier
+from sklearn.ensemble import RandomForestClassifier
 
-##### Real News:
-- Relevant named entities (e.g., "NASA," "United Nations").
-- Keywords indicating credible reporting (e.g., "study," "policy").
-- Balanced sentiment (neutral or compound sentiment scores close to zero).
-- Complex and factual language.
+rf_model = RandomForestClassifier(n_estimators=200, max_depth=10)
+rf_model.fit(X_train, y_train)
 
----
-
-#### Example Workflow
-##### Input Sentence:
-*"Breaking news: Dinosaurs have been cloned in a secret lab!"*
-
-##### Feature Extraction:
-- Tokens: `["Breaking", "news", "Dinosaurs", "have", "been", "cloned", "in", "a", "secret", "lab", "!"]`
-  - Number of Tokens: 11
-- Sentiment Compound: 0.7 (high positive sentiment)
-- Named Entities: 0 (no valid persons, organizations, or locations)
-- Exaggeration Count: 2 (`"Breaking"`, `"secret"`)
-- Real Keywords Count: 0
-
-##### Prediction:
-- Features suggest sensationalism, lack of credible keywords, and missing named entities.
-- **Output**: **Prediction: Fake**, **Probability: 0.85**
-
----
-
-#### Strengths and Limitations
-
-##### Strengths:
-- Combines linguistic and semantic features to analyze text.
-- Machine learning model generalizes patterns from training data.
-
-##### Limitations:
-- Relies on a predefined keyword list for exaggeration and real news, which may not cover all cases.
-- Limited understanding of context (e.g., satire or ambiguous claims).
-- Depends on the quality and diversity of the training dataset.
-
+# Predict and evaluate
+predictions = rf_model.predict(X_test)
