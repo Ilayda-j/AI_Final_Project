@@ -1,0 +1,1 @@
+# AI Final Project: Automated Fake News Detector for Social Media
