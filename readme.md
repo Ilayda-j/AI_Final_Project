@@ -1,5 +1,8 @@
 # AI Final Project: Automated Fake News Detector for Social Media
 
+* Group 16
+* Ilayda Koca
+
 ## **Introduction**
 
 ### **Motivation**
