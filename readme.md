@@ -19,15 +19,10 @@ By addressing the technical and analytical aspects of this problem, this project
 
 For this project, I introduced multiple AI approaches to achieve accurate and transparent misinformation detection. The key contributions include:
 
-1. Natural Language Processing (NLP):
--- Extracts linguistic features from posts using tokenization, sentiment analysis, and Named Entity Recognition (NER).
-2. Decision Tree Models:
--- Implements Random Forest classifiers to identify patterns and classify text based on extracted features.
-3. Neural Networks (RNN/LSTM):
--- Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
-4. Transformer-based Models (e.g., BERT/RoBERTa):
--- Provides sophisticated context and semantic understanding for detecting subtle misinformation.
-
+1. **Natural Language Processing (NLP)**: Extracts linguistic features from posts using tokenization, sentiment analysis, and Named Entity Recognition (NER).
+2. **Decision Tree Models**: Implements Random Forest classifiers to identify patterns and classify text based on extracted features.
+3. **Neural Networks (RNN/LSTM)**: Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
+4. **Transformer-based Models (e.g., BERT/RoBERTa)**: Provides sophisticated context and semantic understanding for detecting subtle misinformation.
 
 ## **Solution Formulation**
 
@@ -69,8 +64,12 @@ This project uses a combination of AI techniques to tackle the problem of detect
    - **Role**: Fake news often lacks references to credible entities or uses irrelevant ones, which NER helps identify.
 
 #### **Why NLP?**
-NLP provides the foundational features for the system, allowing higher-level algorithms to focus on relevant linguistic patterns, improving classification accuracy and robustness.
+Natural Language Processing (NLP) is a fundamental part of this project because it enables the system to extract meaningful insights from raw text data, which is inherently unstructured and complex. Social media posts are highly variable in language style, length, and tone, and NLP provides the tools to handle these variations systematically.
+It enables the system to:
 
+Extract patterns from text data.
+Represent unstructured information in a structured format.
+Provide interpretable insights for both users and machine learning models. By bridging the gap between unstructured text and structured analysis, NLP ensures the system is both robust and scalable for real-world applications.
 ---
 
 ### **2. Decision Tree Models (Random Forest)**
