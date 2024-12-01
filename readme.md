@@ -2,6 +2,33 @@
 
 ## Introduction
 
+### Motivation 
+
+The rise of misinformation on social media presents an intriguing and challenging problem for algorithm design. Fake news not only spreads faster than truthful content but also exploits linguistic and contextual nuances, making it a compelling subject for advanced AI applications. This project is motivated by the opportunity to explore and implement state-of-the-art algorithms to address a real-world problem within a controlled academic framework.
+
+Building an Automated Fake News Detector provides a platform to apply and integrate a variety of machine learning and natural language processing (NLP) techniques. It challenges us to design and evaluate algorithms capable of distinguishing between fake and real news with high accuracy while maintaining transparency and interpretability.
+
+This project also provides a valuable learning opportunity to:
+
+- Experiment with feature engineering, decision tree-based models, recurrent neural networks (RNN/LSTM), and transformer-based architectures.
+- Evaluate algorithms using established datasets such as LIAR and FakeNewsNet.
+- Analyze and compare performance metrics to determine the most effective approach.
+By addressing the technical and analytical aspects of this problem, this project allows us to deepen our understanding of AI methodologies while contributing a meaningful solution to an increasingly relevant societal issue.
+
+### Contributions
+
+For this project, I introduced multiple AI approaches to achieve accurate and transparent misinformation detection. The key contributions include:
+
+1. Natural Language Processing (NLP):
+- Extracts linguistic features from posts using tokenization, sentiment analysis, and Named Entity Recognition (NER).
+2. Decision Tree Models:
+- Implements Random Forest classifiers to identify patterns and classify text based on extracted features.
+3. Neural Networks (RNN/LSTM):
+- Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
+4. Transformer-based Models (e.g., BERT/RoBERTa):
+- Provides sophisticated context and semantic understanding for detecting subtle misinformation.
+
+
 ## Algorithms
 
 ### Algorithm 1: NLP High-Level Explanation of the Algorithm
