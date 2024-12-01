@@ -70,7 +70,6 @@ It enables the system to:
 - Represent unstructured information in a structured format.
 - Provide interpretable insights for both users and machine learning models. 
 
-By bridging the gap between unstructured text and structured analysis, NLP ensures the system is both robust and scalable for real-world applications.
 ---
 
 ### **2. Decision Tree Models (Random Forest)**
