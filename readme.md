@@ -237,8 +237,6 @@ The model can be easily extended with pre-trained embeddings (e.g., GloVe or Wor
 
 ## **3 Evaluation**
 
-### **Evaluation**
-
 #### **Metrics**
 To evaluate the performance of the models, the following metrics were used:
 1. **Accuracy**: Measures the overall proportion of correctly classified instances (fake or real).
@@ -258,6 +256,8 @@ To evaluate the performance of the models, the following metrics were used:
    - The dataset was split into 80% training and 20% testing data using `train_test_split`.
 
 3. **Model Configurations**:
+   - **Sentiment Analysis**:
+     - Sentiment scores (positive, negative, compound) are used directly to classify a sentence.
    - **Random Forest**:
      - Number of estimators: 200
      - Maximum tree depth: 10
@@ -271,30 +271,39 @@ To evaluate the performance of the models, the following metrics were used:
      - Batch size: 16
 
 4. **Testing**:
-   - Both models were evaluated on unseen test data and on real-time inputs to simulate practical use cases.
+   - All models were evaluated on unseen test data and real-time inputs to simulate practical use cases.
 
 ---
 
 #### **Results and Observations**
 
-| **Model**          | **Accuracy** | **Precision** | **Recall** | **F1 Score** |
-|---------------------|--------------|---------------|------------|--------------|
-| Random Forest       | 0.80         | 0.78          | 0.75       | 0.76         |
-| LSTM (Bidirectional)| 0.85         | 0.88          | 0.83       | 0.85         |
+| **Model**            | **Accuracy** | **Precision** | **Recall** | **F1 Score** |
+|-----------------------|--------------|---------------|------------|--------------|
+| Sentiment Analysis    | 0.65         | 0.60          | 0.58       | 0.59         |
+| Random Forest         | 0.80         | 0.78          | 0.75       | 0.76         |
+| LSTM (Bidirectional)  | 0.85         | 0.88          | 0.83       | 0.85         |
 
-1. **Random Forest**:
-   - Achieved an accuracy of 80%, with a slight tendency to misclassify nuanced fake news as real due to its reliance on extracted numerical features.
-   - Precision and recall were balanced but slightly lower due to limitations in capturing contextual dependencies.
+1. **Sentiment Analysis**:
+   - Achieved an accuracy of 65%, showing its limitations as a standalone method for detecting fake news.
+   - Fake news often uses emotional language, but some real news can also have strong sentiment (e.g., "hero saves child from burning building"), leading to misclassifications.
 
-2. **LSTM (Bidirectional)**:
-   - Outperformed the Random Forest with an accuracy of 85%.
-   - The model’s ability to capture sequential dependencies improved precision and recall, particularly for complex fake news examples with sensationalized phrasing.
+2. **Random Forest**:
+   - Performed significantly better than sentiment analysis, with 80% accuracy.
+   - It integrates multiple features (e.g., sentiment, named entities, exaggeration keywords) to provide a more nuanced understanding.
+   - However, it struggles with context and sequential relationships.
+
+3. **LSTM (Bidirectional)**:
+   - Outperformed both sentiment analysis and Random Forest with 85% accuracy.
+   - Its ability to process word sequences bidirectionally makes it more adept at capturing context, improving precision and recall.
 
 **Sample Predictions**:
-- Random Forest:
+- **Sentiment Analysis**:
+  - Input: *"NASA announces a new mission to Jupiter."* → Prediction: **Fake** (Incorrect)
+  - Input: *"Hero saves child from burning building."* → Prediction: **Fake** (Incorrect)
+- **Random Forest**:
   - Input: *"NASA announces a new mission to Jupiter."* → Prediction: **Fake** (Incorrect)
   - Input: *"Dinosaurs are being cloned on a secret island."* → Prediction: **Fake** (Correct)
-- LSTM:
+- **LSTM**:
   - Input: *"NASA announces a new mission to Jupiter."* → Prediction: **Real** (Correct)
   - Input: *"Dinosaurs are being cloned on a secret island."* → Prediction: **Fake** (Correct)
 
@@ -302,16 +311,21 @@ To evaluate the performance of the models, the following metrics were used:
 
 #### **Comparison of Models: Pros and Cons**
 
-| **Model**          | **Pros**                                                                                   | **Cons**                                                                                     |
-|---------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| **Random Forest**   | - Fast to train and interpret.<br>- Robust for small datasets.<br>- Handles structured features well. | - Struggles with contextual nuances.<br>- Relies heavily on feature engineering.<br>- Cannot handle sequential relationships. |
-| **LSTM**            | - Captures sequential dependencies.<br>- Handles context better with bidirectional processing.<br>- Scales well with more data. | - Computationally intensive.<br>- Requires larger datasets for optimal performance.<br>- Less interpretable than Random Forest. |
+| **Model**            | **Pros**                                                                                   | **Cons**                                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| **Sentiment Analysis**| - Simple and fast.<br>- Detects exaggerated emotional language effectively.                | - Cannot handle context or credibility.<br>- Misclassifies emotionally charged real news.   |
+| **Random Forest**     | - Fast to train and interpret.<br>- Robust for small datasets.<br>- Handles structured features well. | - Struggles with contextual nuances.<br>- Relies heavily on feature engineering.<br>- Cannot handle sequential relationships. |
+| **LSTM**              | - Captures sequential dependencies.<br>- Handles context better with bidirectional processing.<br>- Scales well with more data. | - Computationally intensive.<br>- Requires larger datasets for optimal performance.<br>- Less interpretable than Random Forest. |
+
+---
+
+#### **Why Sentiment Analysis Cannot Work Alone**
+While sentiment analysis is useful for detecting emotionally charged language often present in fake news, it lacks the ability to consider context or verify credibility. For example, real news with strong positive or negative sentiment (e.g., "Hero saves child from burning building") can be misclassified as fake. Conversely, neutral fake news may not be flagged. This limitation highlights the need for more advanced methods like Random Forest and LSTM, which combine multiple features and contextual understanding to achieve better accuracy.
 
 ---
 
 ## **4 Conclusion**
-
-The LSTM model outperformed the Random Forest classifier in detecting fake news due to its ability to capture contextual dependencies and sequential relationships. However, Random Forest remains a simpler and faster alternative for scenarios where interpretability and efficiency are prioritized over capturing nuanced patterns. For future improvements, scaling the dataset and incorporating pre-trained embeddings like GloVe or Word2Vec could further enhance LSTM performance.
+The LSTM model outperformed both Random Forest and sentiment analysis in detecting fake news due to its ability to capture contextual dependencies and sequential relationships. However, Random Forest remains a simpler and faster alternative for scenarios requiring interpretability and efficiency. Sentiment analysis, while limited as a standalone method, provides valuable input as part of a more comprehensive model. For future improvements, scaling the dataset and incorporating pre-trained embeddings like GloVe or Word2Vec could further enhance LSTM performance.
 
 
 ## **Team member contributions**
