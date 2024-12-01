@@ -146,8 +146,6 @@ classifier = RandomForestClassifier(n_estimators=200, max_depth=10, random_state
 classifier.fit(X_train, y_train)
 ```
 
-### 3. **AI Techniques Implemented**
-
 This method employs a **Long Short-Term Memory (LSTM)** neural network to classify text as either **fake** or **real**. LSTM is a type of recurrent neural network (RNN) that excels at capturing temporal dependencies and context in sequential data, such as text. The model was implemented with a bidirectional LSTM to process the text both forwards and backwards, ensuring a thorough understanding of word relationships.
 
 ---
@@ -235,7 +233,7 @@ The bidirectional LSTM ensures that both the preceding and succeeding contexts o
 
 The model can be easily extended with pre-trained embeddings (e.g., GloVe or Word2Vec) or additional layers for further performance improvements.
 
-## **3 Evaluation**
+## **3 Evaluation**
 
 #### **Metrics**
 To evaluate the performance of the models, the following metrics were used:
