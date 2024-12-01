@@ -66,10 +66,11 @@ This project uses a combination of AI techniques to tackle the problem of detect
 #### **Why NLP?**
 Natural Language Processing (NLP) is a fundamental part of this project because it enables the system to extract meaningful insights from raw text data, which is inherently unstructured and complex. Social media posts are highly variable in language style, length, and tone, and NLP provides the tools to handle these variations systematically.
 It enables the system to:
+- Extract patterns from text data.
+- Represent unstructured information in a structured format.
+- Provide interpretable insights for both users and machine learning models. 
 
-Extract patterns from text data.
-Represent unstructured information in a structured format.
-Provide interpretable insights for both users and machine learning models. By bridging the gap between unstructured text and structured analysis, NLP ensures the system is both robust and scalable for real-world applications.
+By bridging the gap between unstructured text and structured analysis, NLP ensures the system is both robust and scalable for real-world applications.
 ---
 
 ### **2. Decision Tree Models (Random Forest)**
