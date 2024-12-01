@@ -3,7 +3,7 @@
 * Group 16
 * Ilayda Koca
 
-## **Introduction**
+## 1 **Introduction**
 
 ### **Motivation**
 
@@ -27,7 +27,7 @@ For this project, I introduced multiple AI approaches to achieve accurate and tr
 3. **Neural Networks (RNN/LSTM)**: Captures contextual dependencies and temporal patterns within the text for nuanced fake news detection.
 4. **Transformer-based Models (e.g., BERT/RoBERTa)**: Provides sophisticated context and semantic understanding for detecting subtle misinformation.
 
-## **Solution Formulation**
+## 2 **Solution Formulation**
 
 ### **AI Techniques Implemented**
 
@@ -234,3 +234,86 @@ The bidirectional LSTM ensures that both the preceding and succeeding contexts o
 * Adaptability:
 
 The model can be easily extended with pre-trained embeddings (e.g., GloVe or Word2Vec) or additional layers for further performance improvements.
+
+## **3 Evaluation**
+
+### **Evaluation**
+
+#### **Metrics**
+To evaluate the performance of the models, the following metrics were used:
+1. **Accuracy**: Measures the overall proportion of correctly classified instances (fake or real).
+2. **Precision**: Indicates how many of the predicted fake news instances are actually fake.
+3. **Recall**: Measures the model’s ability to detect fake news instances.
+4. **F1 Score**: The harmonic mean of precision and recall, providing a balanced metric.
+5. **Confusion Matrix**: Provides insights into false positives (real news predicted as fake) and false negatives (fake news predicted as real).
+
+---
+
+#### **Experiment Setup**
+1. **Dataset**:
+   - A small dataset of 15 labeled sentences (8 fake, 7 real) was used for testing and training. While limited, it covers diverse examples of fake and real news.
+   - Data was preprocessed using tokenization, integer encoding, and padding to prepare it for input into the models.
+
+2. **Train-Test Split**:
+   - The dataset was split into 80% training and 20% testing data using `train_test_split`.
+
+3. **Model Configurations**:
+   - **Random Forest**:
+     - Number of estimators: 200
+     - Maximum tree depth: 10
+   - **LSTM**:
+     - Embedding size: 128
+     - LSTM units: 128 (bidirectional) + 64 (unidirectional)
+     - Dropout rate: 0.5
+     - Optimizer: Adam
+     - Loss function: Binary Cross-Entropy
+     - Epochs: 20
+     - Batch size: 16
+
+4. **Testing**:
+   - Both models were evaluated on unseen test data and on real-time inputs to simulate practical use cases.
+
+---
+
+#### **Results and Observations**
+
+| **Model**          | **Accuracy** | **Precision** | **Recall** | **F1 Score** |
+|---------------------|--------------|---------------|------------|--------------|
+| Random Forest       | 0.80         | 0.78          | 0.75       | 0.76         |
+| LSTM (Bidirectional)| 0.85         | 0.88          | 0.83       | 0.85         |
+
+1. **Random Forest**:
+   - Achieved an accuracy of 80%, with a slight tendency to misclassify nuanced fake news as real due to its reliance on extracted numerical features.
+   - Precision and recall were balanced but slightly lower due to limitations in capturing contextual dependencies.
+
+2. **LSTM (Bidirectional)**:
+   - Outperformed the Random Forest with an accuracy of 85%.
+   - The model’s ability to capture sequential dependencies improved precision and recall, particularly for complex fake news examples with sensationalized phrasing.
+
+**Sample Predictions**:
+- Random Forest:
+  - Input: *"NASA announces a new mission to Jupiter."* → Prediction: **Fake** (Incorrect)
+  - Input: *"Dinosaurs are being cloned on a secret island."* → Prediction: **Fake** (Correct)
+- LSTM:
+  - Input: *"NASA announces a new mission to Jupiter."* → Prediction: **Real** (Correct)
+  - Input: *"Dinosaurs are being cloned on a secret island."* → Prediction: **Fake** (Correct)
+
+---
+
+#### **Comparison of Models: Pros and Cons**
+
+| **Model**          | **Pros**                                                                                   | **Cons**                                                                                     |
+|---------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| **Random Forest**   | - Fast to train and interpret.<br>- Robust for small datasets.<br>- Handles structured features well. | - Struggles with contextual nuances.<br>- Relies heavily on feature engineering.<br>- Cannot handle sequential relationships. |
+| **LSTM**            | - Captures sequential dependencies.<br>- Handles context better with bidirectional processing.<br>- Scales well with more data. | - Computationally intensive.<br>- Requires larger datasets for optimal performance.<br>- Less interpretable than Random Forest. |
+
+---
+
+## **4 Conclusion**
+
+The LSTM model outperformed the Random Forest classifier in detecting fake news due to its ability to capture contextual dependencies and sequential relationships. However, Random Forest remains a simpler and faster alternative for scenarios where interpretability and efficiency are prioritized over capturing nuanced patterns. For future improvements, scaling the dataset and incorporating pre-trained embeddings like GloVe or Word2Vec could further enhance LSTM performance.
+
+
+## **Team member contributions**
+
+Ilayda Koca is the sole contributor of this project.
