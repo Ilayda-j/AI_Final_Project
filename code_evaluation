@@ -1,0 +1,131 @@
+# Automated Fake News Detector for Social Media
+
+## Project Overview
+This project is an AI-based automated fake news detector that utilizes natural language processing (NLP), Random Forest models, and LSTM neural networks. The code provides multiple methodologies to classify social media news as either `Fake` or `Real` based on textual content.
+
+---
+
+## Prerequisites
+### System Requirements
+- Python 3.8 or later
+- pip package manager
+- Docker (optional, for containerized setup)
+
+---
+
+## Installation Instructions
+
+### 1. Clone the Repository
+Clone this project to your local machine:
+```bash
+git clone https://github.com/Ilayda-j/AI_Final_Project.git
+cd https://github.com/Ilayda-j/AI_Final_Project.git
+```
+
+### 2. Create a Virtual Environment
+To avoid dependency conflicts, create and activate a virtual environment:
+```bash
+python3 -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+```
+
+### 3. Install Required Libraries
+Install all required libraries using the following command:
+```bash
+pip install -r requirements.txt
+```
+**Note:** If the `requirements.txt` file is not available, manually install the dependencies listed below:
+
+#### Required Libraries
+- `numpy`
+- `pandas`
+- `scikit-learn`
+- `tensorflow`
+- `nltk`
+- `matplotlib`
+- `seaborn`
+- `keras`
+
+Install these libraries using:
+```bash
+pip install numpy pandas scikit-learn tensorflow nltk matplotlib seaborn keras
+```
+
+### 4. Download NLTK Resources
+Ensure necessary NLTK resources are available by running:
+```python
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+```
+
+### 5. Prepare Data
+Ensure the dataset is available in the proper directory structure (e.g., `data/`). Modify the paths in the scripts (`lstm.py` or `nlp.py`) if needed to point to your dataset location.
+
+---
+
+## Running the Code
+
+### 1. Running NLP-based Classification
+Navigate to the directory containing `nlp.py` and execute the script:
+```bash
+python nlp.py
+```
+This script applies feature extraction, trains the Random Forest model, and evaluates its performance.
+
+### 2. Running LSTM-based Classification
+Navigate to the directory containing `lstm.py` and execute the script:
+```bash
+python lstm.py
+```
+This script tokenizes text data, trains the LSTM model, and performs evaluations.
+
+### 3. Testing with Inputs
+To test the models with inputs, copy sample input (sentences) from `test_cases.md` file or pass your custom text inputs (a piece of news header) directly in the script where indicated.
+
+---
+
+## Project Structure
+```
+project-directory/
+├── data/                # Directory for datasets
+├── lstm.py              # Script for LSTM-based classification
+├── nlp.py               # Script for NLP and Random Forest-based classification
+├── requirements.txt     # Dependencies for the project
+├── test_cases.md        # Sample test cases for verification
+└── code_reproducability.md            # Instructions for running the code
+```
+
+---
+
+## Testing the Code
+1. After running each script, check the console for evaluation metrics such as accuracy, precision, recall, and F1 scores.
+2. Compare the results with the provided test cases in `test_cases.md`.
+3. Ensure predictions align with expectations by validating outputs against test examples.
+
+---
+
+## Optional: Using Docker
+For a containerized setup:
+1. Build the Docker image:
+   ```bash
+   docker build -t fake-news-detector .
+   ```
+2. Run the container:
+   ```bash
+   docker run -it fake-news-detector
+   ```
+
+---
+
+## Key Notes
+- **Dataset Preprocessing**: The dataset must be preprocessed for tokenization, padding, and feature extraction. Ensure the preprocessing steps in the scripts match your dataset structure.
+- **Configurations**: Hyperparameters for models (e.g., number of trees in Random Forest, LSTM units) can be modified directly in the respective scripts.
+- **Outputs**: Outputs include predictions, probability scores, and confusion matrices for each model.
+
+---
+
+## Contact
+For issues or suggestions, contact the project contributor at: ilayda.koca@vanderbilt.edu
